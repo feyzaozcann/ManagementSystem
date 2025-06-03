@@ -19,12 +19,28 @@ namespace Server.Controllers
         
    
 
-    [HttpPost("login")]
+        [HttpPost("login")]
         public async Task<IActionResult> SignInAsync(Login user)
         {
             if (user is null) return BadRequest("User cannot be null");
             var result = await accountInterface.SignInAsync(user);
             return Ok(result);
         }
+
+
+
+
+        [HttpPost("refresh-token")]
+        public async Task<IActionResult> RefreshTokenAsync([FromBody] RefreshToken token)
+        {
+
+            if (token == null || string.IsNullOrWhiteSpace(token.Token))
+                return BadRequest(new { flag = false, message = "Token required" });
+
+            var result = await accountInterface.RefreshTokenAsync(token);
+            return Ok(result);
+        }
+
     }
+    
 }

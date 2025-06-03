@@ -4,12 +4,25 @@ using ServerLibrary.Data;
 using ServerLibrary.Helpers;
 using ServerLibrary.Repositories.Contracts;
 using ServerLibrary.Repositories.Implementations;
+using System.Text.Json;
+
+
+Env.Load();
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+   .AddJsonOptions(opts =>
+   {
+    opts.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    opts.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+       });
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -24,7 +37,7 @@ builder.Services.AddScoped<IUserAccount, UserAccountRepository>();
 var app = builder.Build();
 
 
-Env.Load();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

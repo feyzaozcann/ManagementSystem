@@ -2,9 +2,9 @@
 using BaseLibrary.Responses;
 
 
-namespace ServerLibrary.Repositories.Contracts
+namespace ClientLibrary.Services.Contracts
 {
-    public interface IUserAccount
+    public interface IUserAccountService
     {
         Task<GeneralResponse> CreateAsync(Register user);
         Task<LoginResponse> SignInAsync(Login user);
